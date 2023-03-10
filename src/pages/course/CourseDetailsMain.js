@@ -3,13 +3,16 @@ import {Link} from 'react-router-dom';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import {currencyFormat, useInternalLink} from "../../lib/helper";
 import ReactMarkdown from "react-markdown";
+import authorImg1 from '../../assets/images/course-single/user4.jpg'
+import authorImg2 from '../../assets/images/course-single/user5.jpg'
 
 const CourseDetailsMain = (props) => {
     let tab1 = "Discription",
-        tab2 = "Curriculum"
-    // tab3 = "Reviews",
+        tab2 = "Curriculum",
+        tab3 = "Reviews"
     // tab4 = "FAQ"
-    const tabStyle = 'nav nav-tabs';
+    const
+        tabStyle = 'nav nav-tabs';
 
     const {
         videoID,
@@ -46,6 +49,9 @@ const CourseDetailsMain = (props) => {
                                     <Tab>
                                         <button>{tab2}</button>
                                     </Tab>
+                                    <Tab>
+                                        <button>{tab3}</button>
+                                    </Tab>
                                 </TabList>
 
                                 <div className="tab-content" id="back-tab-content">
@@ -72,10 +78,68 @@ const CourseDetailsMain = (props) => {
                                             })}
                                         </div>
                                     </TabPanel>
+                                    <TabPanel>
+                                        <div className="tab-pane">
+                                            <h3>Reviews</h3>
+                                            <Link to="#" className="post-author">
+                                                <div className="avatar">
+                                                    <img src={authorImg1} alt="user" />
+                                                </div>
+                                                <div className="info">
+                                                    <h4 className="name">Bodrum Says <span className="designation">July 8, 2022 at 7:38 am</span></h4>
+                                                    <p>Mi eget mauris pharetra et. Bibendum arcu vitae elementum curabitur vitae. Viverra mauris in aliquam sem fringilla ut morbi tincidunt aliquam purus.</p>
+                                                </div>
+                                            </Link>
+
+                                            <Link to="#" className="post-author">
+                                                <div className="avatar">
+                                                    <img src={authorImg2} alt="user" />
+                                                </div>
+                                                <div className="info">
+                                                    <h4 className="name">Hanson Deck <span className="designation">July 9, 2022 at 6:20 am</span></h4>
+                                                    <p>Lobortis elementum nibh tellus molestie praesent semper feugiat nibh sed pulvinar proin.</p>
+                                                </div>
+                                            </Link>
+                                            <div className="blog-form pt---30">
+                                                <h3>Write a Review</h3>
+                                                <p className="pb---15">Your email address will not be published. Required fields are marked *</p>
+                                                <form id="contact-form">
+                                                    <div className="row">
+                                                        <div className="col-lg-6">
+                                                            <div className="back-input">
+                                                                <input id="name" type="text" name="name" placeholder="Name" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="col-lg-6 pdl-5">
+                                                            <div className="back-input">
+                                                                <input id="email" type="email" name="email" placeholder="Email" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="col-lg-12">
+                                                            <div className="back-input">
+                                                                <input id="phone" type="tel" name="phone" placeholder="Phone" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="col-lg-12">
+                                                            <div className="back-textarea">
+                                                                <textarea id="message" name="message" placeholder="Message"></textarea>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="col-lg-12">
+                                                            <button type="submit" className="back-btn">Submit Review <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </TabPanel>
                                 </div>
                             </div>
                         </Tabs>
-
                     </div>
                     <div className="col-lg-4 md-mt-60">
                         <div className="react-sidebar react-back-course2 ml----30">

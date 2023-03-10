@@ -1,32 +1,46 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import SectionTitle from '../../components/SectionTitle'
 
 import SingleCourse from '../../components/Course/SingleCourse';
+import Api from "../../lib/api";
+import {useInternalLink} from "../../lib/helper";
 
 
-import courses from '../../data/Courses.json';
+// import courses from '../../data/Courses.json';
 
-const Course = () => {
+const Course = ({sectionMeta}) => {
+    const [courses, setCourses] = useState([]);
+
+    useEffect(()=>{
+        if(sectionMeta) {
+            const {courses} = sectionMeta
+            if(courses){
+                setCourses(courses.data)
+            }
+        }
+
+    },[sectionMeta])
 
     return (
 
         <div className="popular__course__area pt---100 pb---100">
             <div className="container">
-                <SectionTitle Title="Popular Courses" />
+                <SectionTitle Title={sectionMeta?.Title} />
                 <div className="row">
-                    {courses.map((data, index) => {
+                    {Array.from(courses).map((data, index) => {
+                        const {attributes} = data
                         return (
                             <div key={index} className="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 wow animate__fadeInUp" data-wow-duration="0.3s">
                                 {
                                     <SingleCourse
-                                        courseID={data.id}
-                                        courseImg= {`${data.image}`}
-                                        courseTitle= {data.title}
-                                        courseName= {data.name}
-                                        courseLesson= {data.lesson}
-                                        courseEnrolled= {data.enrolled}
-                                        coursePrice= {data.price}
+                                        courseID={attributes.Slug}
+                                        courseImg= {useInternalLink(attributes.Thumbnail?.data.attributes.formats.small.url)}
+                                        courseTitle= {attributes.Name}
+                                        courseLesson= {attributes.Classs}
+                                        courseDuration= {attributes.Duration}
+                                        coursePrice= {attributes?.Price}
+                                        itemClass={""}
                                     />
                                 }
 

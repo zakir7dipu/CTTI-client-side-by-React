@@ -14,7 +14,7 @@ import Preloader from "../../components/Preloader";
 const HomeMain =({meta}) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [hero, setHero] = useState([]);
-	const [workTitle, setWorkTitle] = useState("");
+	const [popular, setPopular] = useState([]);
 	const [aboutUs, setAboutUs] = useState([]);
 	const [clients, setClients] = useState([]);
 	const [eventTitle, setEventTitle] = useState("");
@@ -25,7 +25,7 @@ const HomeMain =({meta}) => {
 		if(meta){
 			setAboutUs(meta.AboutUs)
 			setHero(meta.Hero);
-			setWorkTitle(meta.WorkTitle);
+			setPopular(meta.Popular);
 			setClients(meta.Client);
 			setEventTitle(meta.EventTitle);
 			setQuoteTitle(meta.QuoteTitle);
@@ -46,7 +46,7 @@ const HomeMain =({meta}) => {
 						{/* SliderSection-start */}
 
 						{/* Course-area-start */}
-						<Course title={workTitle}/>
+						<Course sectionMeta={popular}/>
 						{/* Course-area-end */}
 
 						{/* About-area-start */}

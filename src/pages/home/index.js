@@ -8,9 +8,11 @@ const HomePage = () => {
     const [metaData, setMetaData] = useState();
 
     const getHomePageData = () => {
-        api.get("home-page?populate[Hero][populate]=*&populate[AboutUs][populate]=*&populate[Client]=*")
+        // api.get("home-page?populate[Hero][populate]=*&populate[AboutUs][populate]=*&populate[Client]=*&populate[Courses]=*")
+        api.get("home-page?populate[Hero][populate]=*&populate[AboutUs][populate]=*&populate[Client]=*&populate[Popular][populate][courses][populate]=Thumbnail")
             .then(res => {
                 const {attributes} = res.data.data;
+                console.log(attributes)
                 setMetaData(attributes)
             })
             .catch(err => console.log(err))
