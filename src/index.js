@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/scss/main.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 const rootElement = document.getElementById("root");
 const root = ReactDOM.createRoot(rootElement);

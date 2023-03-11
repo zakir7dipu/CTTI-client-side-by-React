@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Outlet} from "react-router-dom";
 import Header from "../components/Header";
-import footerLogo from "../assets/images/logos/footer-logo.png";
+import {ToastContainer} from "react-toastify";
 import Footer from "../components/Footer";
 import Api from "../lib/api"
 
@@ -40,6 +40,7 @@ function GuestLayout() {
                 settings={siteSettings}
                 socialLinks={socialLinks}
             />
+            <ToastContainer />
         </>
     );
 }

@@ -1,12 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
-import {currencyFormat, useInternalLink} from "../../lib/helper";
+import {
+    currencyFormat,
+    errorMessage,
+    getGravatar,
+    infoMessage,
+    stringToTime, successMessage,
+    uid,
+    useInternalLink
+} from "../../lib/helper";
 import ReactMarkdown from "react-markdown";
-import authorImg1 from '../../assets/images/course-single/user4.jpg'
-import authorImg2 from '../../assets/images/course-single/user5.jpg'
+import Api from "../../lib/api";
+import Notify from "../../lib/Notify";
 
 const CourseDetailsMain = (props) => {
+    const {api} = Api();
     let tab1 = "Discription",
         tab2 = "Curriculum",
         tab3 = "Reviews"
@@ -15,6 +24,7 @@ const CourseDetailsMain = (props) => {
         tabStyle = 'nav nav-tabs';
 
     const {
+        courseID,
         videoID,
         courseImg,
         courseName,
@@ -28,8 +38,56 @@ const CourseDetailsMain = (props) => {
         couresClassPerWeek,
         couresClassDuration,
         couresDeliveryMode,
-        curricula
+        curricula,
+        reviews
     } = props;
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [message, setMessage] = useState("");
+
+    const requestHandler = (e) => {
+        e.preventDefault();
+        if (!name) {
+            errorMessage("Name field is required to review.")
+        }
+        if (!email) {
+            errorMessage("Email field is required to review.")
+        }
+        if (!phone) {
+            errorMessage("Phone field is required to review.")
+        }
+        if (!message) {
+            errorMessage("Message field is required to review.")
+        }
+        if(name && email && phone && message && courseID) {
+            let data = {
+                data: {
+                    Name: name,
+                    Email: email,
+                    Phone: phone,
+                    Message: message,
+                    course: courseID
+                }
+            }
+            infoMessage("Please wait a while, We are processing your request.")
+            api.post("reviews",data)
+                .then(res=>{
+                    resetHandler()
+                    successMessage("Your review has been posted successfully.Thank you for your review.")
+                    // console.log(res.data)
+                })
+                .catch(err=>console.log(err))
+        }
+    }
+
+    const resetHandler = () => {
+        setName("")
+        setEmail("")
+        setPhone("")
+        setMessage("")
+    }
 
     return (
         <div className="back__course__page_grid react-courses__single-page pb---16 pt---110">
@@ -81,56 +139,60 @@ const CourseDetailsMain = (props) => {
                                     <TabPanel>
                                         <div className="tab-pane">
                                             <h3>Reviews</h3>
-                                            <Link to="#" className="post-author">
-                                                <div className="avatar">
-                                                    <img src={authorImg1} alt="user" />
-                                                </div>
-                                                <div className="info">
-                                                    <h4 className="name">Bodrum Says <span className="designation">July 8, 2022 at 7:38 am</span></h4>
-                                                    <p>Mi eget mauris pharetra et. Bibendum arcu vitae elementum curabitur vitae. Viverra mauris in aliquam sem fringilla ut morbi tincidunt aliquam purus.</p>
-                                                </div>
-                                            </Link>
+                                            {reviews && Array.from(reviews).map((review)=>{
+                                                const {attributes} = review;
+                                                return (
+                                                    <Link to="#" className="post-author" key={uid()}>
+                                                        <div className="avatar col-lg-2 col-mb-12">
+                                                            <img src={attributes?.Email && getGravatar(attributes.Email)} alt="user" />
+                                                        </div>
+                                                        <div className="info col-lg-10 col-mb-12">
+                                                            <h4 className="name">{attributes?.Name} <span className="designation">{stringToTime(attributes?.createdAt)}</span></h4>
+                                                            <p>{attributes?.Message}</p>
+                                                        </div>
+                                                    </Link>
+                                                )
+                                            })}
 
-                                            <Link to="#" className="post-author">
-                                                <div className="avatar">
-                                                    <img src={authorImg2} alt="user" />
-                                                </div>
-                                                <div className="info">
-                                                    <h4 className="name">Hanson Deck <span className="designation">July 9, 2022 at 6:20 am</span></h4>
-                                                    <p>Lobortis elementum nibh tellus molestie praesent semper feugiat nibh sed pulvinar proin.</p>
-                                                </div>
-                                            </Link>
                                             <div className="blog-form pt---30">
                                                 <h3>Write a Review</h3>
                                                 <p className="pb---15">Your email address will not be published. Required fields are marked *</p>
-                                                <form id="contact-form">
+                                                <form id="contact-form" onSubmit={requestHandler}>
                                                     <div className="row">
                                                         <div className="col-lg-6">
                                                             <div className="back-input">
-                                                                <input id="name" type="text" name="name" placeholder="Name" />
+                                                                <input id="name" type="text" name="name" placeholder="Name*" value={name} onChange={(e)=>{
+                                                                    setName(e.target.value)
+                                                                }}/>
                                                             </div>
                                                         </div>
 
                                                         <div className="col-lg-6 pdl-5">
                                                             <div className="back-input">
-                                                                <input id="email" type="email" name="email" placeholder="Email" />
+                                                                <input id="email" type="email" name="email" placeholder="Email*" value={email} onChange={(e)=>{
+                                                                    setEmail(e.target.value)
+                                                                }}/>
                                                             </div>
                                                         </div>
 
                                                         <div className="col-lg-12">
                                                             <div className="back-input">
-                                                                <input id="phone" type="tel" name="phone" placeholder="Phone" />
+                                                                <input id="phone" type="tel" name="phone" placeholder="Phone*" value={phone} onChange={(e)=>{
+                                                                    setPhone(e.target.value)
+                                                                }}/>
                                                             </div>
                                                         </div>
 
                                                         <div className="col-lg-12">
                                                             <div className="back-textarea">
-                                                                <textarea id="message" name="message" placeholder="Message"></textarea>
+                                                                <textarea id="message" name="message" placeholder="Message*" value={message} onChange={(e)=>{
+                                                                    setMessage(e.target.value)
+                                                                }}/>
                                                             </div>
                                                         </div>
 
                                                         <div className="col-lg-12">
-                                                            <button type="submit" className="back-btn">Submit Review <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
+                                                            <button type="submit" className="back-btn">Submit Review <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
                                                         </div>
                                                     </div>
                                                 </form>

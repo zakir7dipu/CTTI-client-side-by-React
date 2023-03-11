@@ -6,6 +6,7 @@ import Preloader from "../../components/Preloader";
 const HomePage = () => {
     const {api} = Api();
     const [metaData, setMetaData] = useState();
+    const [reviews, setReviews] = useState();
 
     const getHomePageData = () => {
         // api.get("home-page?populate[Hero][populate]=*&populate[AboutUs][populate]=*&populate[Client]=*&populate[Courses]=*")
@@ -18,13 +19,22 @@ const HomePage = () => {
             .catch(err => console.log(err))
     }
 
+    const getReview = () => {
+        api.get("reviews")
+          .then(res=>{
+              setReviews(res.data.data)
+          })
+          .catch(err=>console.log(err))
+    }
+
     useEffect(() => {
         getHomePageData();
+        getReview();
     }, []);
 
 
     return (
-        <HomeMain meta={metaData}/>
+        <HomeMain reviews={reviews} meta={metaData}/>
     );
 }
 

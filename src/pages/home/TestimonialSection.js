@@ -6,8 +6,9 @@ import SingleTestimonial from '../../components/Testimonial/SingleTestimonial';
 
 import testiImg from '../../assets/images/testimonial/testimonial.png';
 import comaImg from '../../assets/images/testimonial/coma.png';
+import {getGravatar, uid} from "../../lib/helper";
 
-const Testimonial = ({title}) => {
+const Testimonial = ({data, title}) => {
 
     const testimonialSettings = {
         dots: false,
@@ -41,56 +42,21 @@ const Testimonial = ({title}) => {
                     <SectionTitle Title={title} />
                     <div className="client-slider wow animate__fadeInUp" data-wow-duration="0.3s">
                         <Slider {...testimonialSettings}>
-                            <SingleTestimonial
-                                itemclassName="single-client"
-                                itemImg={testiImg }
-                                Title="Justin Case"
-                                Designation="Student"
-                                Desc="Nulla porttitor accumsan tincidunt. vamus magna justo, lacinia eget consectetur sed, convallis at tellus. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Quisque velit nisi, pretium ut lacinia in."
-                                ratingCount='4.9'
-                                reviewCount='14'
-                                comaImg={comaImg}
-                            />
-                            <SingleTestimonial
-                                itemclassName="single-client"
-                                itemImg={testiImg }
-                                Title="Justin Case"
-                                Designation="Student"
-                                Desc="Nulla porttitor accumsan tincidunt. vamus magna justo, lacinia eget consectetur sed, convallis at tellus. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Quisque velit nisi, pretium ut lacinia in."
-                                ratingCount='4.9'
-                                reviewCount='14'
-                                comaImg={comaImg}
-                            />
-                            <SingleTestimonial
-                                itemclassName="single-client"
-                                itemImg={testiImg }
-                                Title="Justin Case"
-                                Designation="Student"
-                                Desc="Nulla porttitor accumsan tincidunt. vamus magna justo, lacinia eget consectetur sed, convallis at tellus. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Quisque velit nisi, pretium ut lacinia in."
-                                ratingCount='4.9'
-                                reviewCount='14'
-                                comaImg={comaImg}
-                            />
-                            <SingleTestimonial
-                                itemclassName="single-client"
-                                itemImg={testiImg }
-                                Title="Justin Case"
-                                Designation="Student"
-                                Desc="Nulla porttitor accumsan tincidunt. vamus magna justo, lacinia eget consectetur sed, convallis at tellus. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Quisque velit nisi, pretium ut lacinia in."
-                                ratingCount='4.9'
-                                reviewCount='14'
-                                comaImg={comaImg}
-                            />
-                            <SingleTestimonial
-                                itemclassName="single-client"
-                                itemImg={testiImg }
-                                Title="Justin Case"
-                                Designation="Student"
-                                Desc="Nulla porttitor accumsan tincidunt. vamus magna justo, lacinia eget consectetur sed, convallis at tellus. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Quisque velit nisi, pretium ut lacinia in."
-                                ratingCount='4.9'
-                                reviewCount='14'
-                                comaImg={comaImg}
-                            />
+                            {data.length && Array.from(data).map(item=>{
+                                const {attributes} = item
+                                console.log(attributes)
+                                return (
+                                    <SingleTestimonial
+                                        key={uid()}
+                                        itemclassName="single-client"
+                                        itemImg={getGravatar(attributes?.Email, 200) }
+                                        Title={attributes?.Name}
+                                        Designation="Student"
+                                        Desc={attributes?.Message}
+                                        comaImg={comaImg}
+                                    />
+                                )
+                            })}
                         </Slider>
                     </div>
                 </div>

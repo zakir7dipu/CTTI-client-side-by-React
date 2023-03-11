@@ -11,7 +11,7 @@ import Testimonial from './TestimonialSection';
 import ScrollToTop from '../../components/ScrollTop';
 import Preloader from "../../components/Preloader";
 
-const HomeMain =({meta}) => {
+const HomeMain =({reviews,meta}) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [hero, setHero] = useState([]);
 	const [popular, setPopular] = useState([]);
@@ -34,7 +34,7 @@ const HomeMain =({meta}) => {
 				setIsLoading(false);
 			}, 500);
 		}
-	},[meta])
+	},[meta,reviews])
 		return (
 			<>
 				{ isLoading && <Preloader/>	}
@@ -58,11 +58,11 @@ const HomeMain =({meta}) => {
 						{/* Counter-area-end */}
 
 						{/* Event-area-start */}
-						<Event title={eventTitle}/>
+						{/*<Event title={eventTitle}/>*/}
 						{/* Event-area-end */}
 
 						{/* testmonial-area-start */}
-						<Testimonial title={quoteTitle}/>
+						{reviews && <Testimonial data={reviews} title={quoteTitle}/>}
 						{/* testmonial-area-end */}
 
 						{/* scrolltop-start */}

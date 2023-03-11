@@ -10,22 +10,25 @@ import Api from "../../lib/api";
 const CourseDetails = () => {
     const {api} = Api();
     const [course, setCourse] = useState([]);
+    const [courseID, setCourseID] = useState([]);
     const [banner, setBanner] = useState("");
     const [thumbnail, setThumbnail] = useState("");
     const [curricula, setCurricula] = useState([]);
+    const [reviews, setReviews] = useState([]);
 
     const location = useLocation();
     const courseURL = location.pathname.split('/');
-    console.log(courseURL[2])
 
     const handleChangeCategory = () => {
         api.get(`courses/${courseURL[2]}`)
             .then(res => {
-                let {attributes} = res.data.data
-                setCourse(attributes)
-                setBanner(attributes.Banner.data.attributes.url)
-                setCurricula(attributes.curricula.data)
-                setThumbnail(attributes.Thumbnail.data.attributes.url)
+                let {id, attributes} = res.data.data;
+                setCourseID(id);
+                setCourse(attributes);
+                setBanner(attributes.Banner.data.attributes.url);
+                setCurricula(attributes.curricula.data);
+                setReviews(attributes.reviews.data);
+                setThumbnail(attributes.Thumbnail.data.attributes.url);
             })
             .catch(err => console.log(err));
     }
@@ -46,6 +49,7 @@ const CourseDetails = () => {
                 />
 
                 <CourseDetailsMain
+                    courseID={courseID}
                     videoID={course.VideoId}
                     courseImg={thumbnail}
                     courseTitle={course.Name}
@@ -61,6 +65,7 @@ const CourseDetails = () => {
                     // courseRegularPrice={currencyFormat(0)}
                     courseLanguage={course.Language}
                     curricula={curricula}
+                    reviews={reviews}
                 />
 
                 {/* scrolltop-start */}
