@@ -23,7 +23,7 @@ function Api () {
         baseURL: `${basePath}/api/`,
         headers: {
             "Content-type": "application/json",
-            // Authorization: `Bearer ${auth.getAuthorisation()}`
+            Authorization: `Bearer 2267a40ab14deb6d07e9b767405c8765c23789425c271ce8e68c0459a2d9739f4d653b487c8becf0936fb63afbee8404e56bef945214d872f27c23d383f09df88d8eb0c74219f008c3aaf01a7e6b0541d476859cc4523da97ef8d1d3f63298a98d903e503eb52a253690ca43a1b786310f04b30d0448cda18cf76a8225462f80`
         }
     })
 
