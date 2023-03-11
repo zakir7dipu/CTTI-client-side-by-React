@@ -45,17 +45,7 @@ function errorMessage(error) {
 }
 
 function errorResponseMessage(error) {
-    if (error.response) {
-        let errorObject = error.response.data.errors;
-        let hasError = Object.getOwnPropertyNames(errorObject)
-        if (hasError) {
-            hasError.forEach(err => {
-                Notify("error", errorObject[err][0])
-            })
-        } else {
-            Notify("error", error.response.data.message)
-        }
-    }
+    Notify("error", error.message)
 }
 
 function successMessage(success) {
