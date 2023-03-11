@@ -44,7 +44,6 @@ const Testimonial = ({data, title}) => {
                         <Slider {...testimonialSettings}>
                             {data.length && Array.from(data).map(item=>{
                                 const {attributes} = item
-                                console.log(attributes)
                                 return (
                                     <SingleTestimonial
                                         key={uid()}

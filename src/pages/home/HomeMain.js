@@ -21,7 +21,6 @@ const HomeMain =({reviews,meta}) => {
 	const [quoteTitle, setQuoteTitle] = useState("");
 	// const {Hero,WorkTitle,AboutUs,Client,EventTitle,QuoteTitle} = meta;
 	useEffect(()=>{
-		// console.log(meta)
 		if(meta){
 			setAboutUs(meta.AboutUs)
 			setHero(meta.Hero);

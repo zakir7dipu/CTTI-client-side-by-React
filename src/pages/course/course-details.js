@@ -6,6 +6,7 @@ import CourseDetailsMain from './CourseDetailsMain';
 import ScrollToTop from '../../components/ScrollTop';
 
 import Api from "../../lib/api";
+import {errorResponseMessage} from "../../lib/helper";
 
 const CourseDetails = () => {
     const {api} = Api();
@@ -30,7 +31,7 @@ const CourseDetails = () => {
                 setReviews(attributes.reviews.data);
                 setThumbnail(attributes.Thumbnail.data.attributes.url);
             })
-            .catch(err => console.log(err));
+            .catch(err => errorResponseMessage(err));
     }
 
     useEffect(()=>{

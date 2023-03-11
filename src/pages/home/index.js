@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import HomeMain from './HomeMain';
 import Api from "../../lib/api";
 import Preloader from "../../components/Preloader";
+import {errorResponseMessage} from "../../lib/helper";
 
 const HomePage = () => {
     const {api} = Api();
@@ -13,10 +14,9 @@ const HomePage = () => {
         api.get("home-page?populate[Hero][populate]=*&populate[AboutUs][populate]=*&populate[Client]=*&populate[Popular][populate][courses][populate]=Thumbnail")
             .then(res => {
                 const {attributes} = res.data.data;
-                console.log(attributes)
                 setMetaData(attributes)
             })
-            .catch(err => console.log(err))
+            .catch(err => errorResponseMessage(err))
     }
 
     const getReview = () => {
@@ -24,7 +24,7 @@ const HomePage = () => {
           .then(res=>{
               setReviews(res.data.data)
           })
-          .catch(err=>console.log(err))
+          .catch(err=>errorResponseMessage(err))
     }
 
     useEffect(() => {

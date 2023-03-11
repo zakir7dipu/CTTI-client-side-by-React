@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import {ToastContainer} from "react-toastify";
 import Footer from "../components/Footer";
 import Api from "../lib/api"
+import {errorResponseMessage} from "../lib/helper";
 
 function GuestLayout() {
     const {api} = Api();
@@ -22,10 +23,11 @@ function GuestLayout() {
                     youtube: attributes.Youtube
                 })
             })
-            .catch(err=>console.log(err))
+            .catch(err=>errorResponseMessage(err))
     }
     useEffect(()=>{
         getSettingsData()
+        setInterval(()=>{console.clear()},5000)
     },[]);
     return (
         <>

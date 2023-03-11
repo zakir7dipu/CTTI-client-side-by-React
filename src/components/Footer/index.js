@@ -2,7 +2,14 @@
 import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 
-import {goToExternalLink, uid, useInternalLink} from "../../lib/helper";
+import {
+    errorMessage,
+    errorResponseMessage,
+    goToExternalLink, infoMessage,
+    successMessage,
+    uid,
+    useInternalLink
+} from "../../lib/helper";
 import Api from "../../lib/api";
 import SecondaryMenu from "./FooterMenu/"
 
@@ -10,13 +17,36 @@ const Footer = (props) => {
     const {api} = Api();
     const { footerClass, settings, socialLinks } = props;
     const [footerMeta, setFooterMeta] = useState([]);
+    const [subscribe, setSubscribe] = useState("");
     const getFooterData = () => {
         api.get("footet?populate[FooterMenu][populate]=*")
             .then(res=>{
                 const {attributes} = res.data.data
                 setFooterMeta(attributes)
             })
-            .catch(err=>console.log(err))
+            .catch(err=>errorResponseMessage(err))
+    }
+
+    const requestHandler = (e) => {
+        e.preventDefault();
+        if(!subscribe) {
+            errorMessage("A email is required to subscribe.")
+        } else {
+            let data = {
+                data: {
+                    Email: subscribe
+                }
+            }
+            api.post("subscribes",data)
+                .then(res=>{
+                    setSubscribe("");
+                    successMessage("Subscription successful.")
+                })
+                .catch(err=>{
+                    infoMessage("You already subscribed to our newsletter.")
+                    console.clear()
+                })
+        }
     }
     useEffect(()=>{
         getFooterData()
@@ -77,9 +107,11 @@ const Footer = (props) => {
                                     <h3 className="footer-title">Newsletter</h3> 
                                     <div className="footer3__form">
                                         <p>Get the latest Echooling news <br />delivered to you inbox</p>
-                                        <form action="#">
-                                            <input type="email" required placeholder="Enter your email" />
-                                            <button className="footer3__form-1">
+                                        <form onSubmit={requestHandler}>
+                                            <input type="email" required placeholder="Enter your email" value={subscribe} onChange={(e)=>{
+                                                setSubscribe(e.target.value)
+                                            }}/>
+                                            <button type={"submit"} className="footer3__form-1">
                                                 <i className="arrow_right"></i>
                                             </button>
                                         </form>

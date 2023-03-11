@@ -6,9 +6,6 @@ import {currencyFormat} from "../../lib/helper";
 
 const SingleCourse = (props) => {
     const { itemClass,courseID,courseImg,courseTitle,courseLesson,courseDuration,coursePrice } = props;
-    useEffect(()=>{
-        console.log(coursePrice)
-    },[coursePrice])
 	return(
         <div className={itemClass ? itemClass : 'course__item mb-30'}>
             <div className="course__thumb">

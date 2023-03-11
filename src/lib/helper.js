@@ -4,7 +4,6 @@ import Notify from "./Notify";
 
 const basePath = global.config.base_path
 function useInternalLink(path) {
-    // console.log(basePath + path)
     return basePath + path
 }
 
@@ -46,6 +45,7 @@ function errorMessage(error) {
 
 function errorResponseMessage(error) {
     Notify("error", error.message)
+    console.clear()
 }
 
 function successMessage(success) {

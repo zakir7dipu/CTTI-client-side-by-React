@@ -8,6 +8,7 @@ import ScrollToTop from '../../components/ScrollTop';
 import Logo from '../../assets/ctti-img/logo-main.png';
 import Api from "../../lib/api";
 import Preloader from "../../components/Preloader";
+import {errorResponseMessage} from "../../lib/helper";
 
 const Course = () => {
     const {api} = Api();
@@ -21,7 +22,7 @@ const Course = () => {
                 setCourses(Array.from(res.data.data))
                 setPaginate(res.data.meta.pagination)
             })
-            .catch(err => console.log(err));
+            .catch(err => errorResponseMessage(err));
     }
 
     useEffect(() => {

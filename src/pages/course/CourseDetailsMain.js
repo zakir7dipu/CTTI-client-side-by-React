@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import {
     currencyFormat,
-    errorMessage,
+    errorMessage, errorResponseMessage,
     getGravatar,
     infoMessage,
     stringToTime, successMessage,
@@ -76,9 +76,8 @@ const CourseDetailsMain = (props) => {
                 .then(res=>{
                     resetHandler()
                     successMessage("Your review has been posted successfully.Thank you for your review.")
-                    // console.log(res.data)
                 })
-                .catch(err=>console.log(err))
+                .catch(err=>errorResponseMessage(err))
         }
     }
 

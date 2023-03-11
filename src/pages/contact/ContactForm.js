@@ -12,19 +12,6 @@ const ContactForm = (props) => {
     const [subject, setSubject] = useState("");
     const [message, setMessage] = useState("");
 
-    function sendEmail(e) {
-        e.preventDefault();
-
-        emailjs.sendForm('', '', e.target, '')
-        .then((result) => {
-            console.log(result.text);
-        }, (error) => {
-            console.log(error.text);
-        });
-
-        e.target.reset()
-    }
-
     const requestHandler = (e) => {
         e.preventDefault();
         if(!name) {
@@ -58,7 +45,6 @@ const ContactForm = (props) => {
                 .then(res=>{
                     resetHandler()
                     successMessage("Thank you for messaging us. Our Business development team will connect you shortly.")
-                    console.log(res.data)
                 })
                 .catch(err=>errorResponseMessage(err))
         }
