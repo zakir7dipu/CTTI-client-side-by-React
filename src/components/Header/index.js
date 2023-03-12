@@ -5,7 +5,7 @@ import MenuItems from './MenuItems';
 
 import normalLogo from '../../assets/ctti-img/logo-main.png';
 import stickyLogo from '../../assets/ctti-img/logo-main.png';
-import {goToExternalLink} from "../../lib/helper";
+import {goToExternalLink, useInternalLink} from "../../lib/helper";
 
 const Header = (props) => {
     const {
@@ -113,11 +113,11 @@ const Header = (props) => {
                                             {
                                                 isVisible ?
                                                     <Link to="/" className="logo-text">
-                                                        <img src={headerStickyLogo ? headerStickyLogo : stickyLogo}
+                                                        <img src={settings?.Logo && useInternalLink(settings.Logo.data.attributes.url)}
                                                              alt=""/>
                                                     </Link> :
                                                     <Link to="/" className="logo-text">
-                                                        <img src={headerNormalLogo ? headerNormalLogo : normalLogo}
+                                                        <img style={{width: '208px', height: "44px"}} src={settings?.Logo && useInternalLink(settings.Logo.data.attributes.url)}
                                                              alt=""/>
                                                     </Link>
                                             }

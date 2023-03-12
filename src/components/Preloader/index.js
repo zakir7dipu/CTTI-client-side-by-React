@@ -1,6 +1,6 @@
 import React from "react";
 
-import loaderImg from '../../assets/images/preload.png'
+import loaderImg from '../../assets/ctti-img/ctti-fav.png'
 
 const Preloader = () => {
   return (
